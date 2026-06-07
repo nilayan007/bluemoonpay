@@ -1,0 +1,19 @@
+package com.bluemoon.bluemoonpay.common.enums;
+
+public enum PaymentEvent {
+    AUTHORIZE_ATTEMPT,
+    AUTHORIZE_SUCCESS,
+    AUTHORIZE_FAILURE,
+    CAPTURE_ATTEMPT,
+    CAPTURE_SUCCESS,
+    CAPTURE_FAILURE,
+    REFUND_ATTEMPT,
+    REFUND_SUCCESS,
+    REFUND_FAILURE,
+    VOID_ATTEMPT,
+    VOID_SUCCESS,
+    VOID_FAILURE,
+    SETTLE,
+    CANCEL,
+    CAPTURE_TIMEOUT,
+}
