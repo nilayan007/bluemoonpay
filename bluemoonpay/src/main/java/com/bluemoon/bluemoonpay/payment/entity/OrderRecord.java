@@ -1,4 +1,4 @@
-package com.bluemoon.bluemoonpay.payments.entity;
+package com.bluemoon.bluemoonpay.payment.entity;
 
 import com.bluemoon.bluemoonpay.common.entity.Money;
 import com.bluemoon.bluemoonpay.common.enums.OrderStatus;

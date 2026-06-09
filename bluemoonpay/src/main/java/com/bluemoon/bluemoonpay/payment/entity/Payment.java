@@ -1,4 +1,4 @@
-package com.bluemoon.bluemoonpay.payments.entity;
+package com.bluemoon.bluemoonpay.payment.entity;
 
 
 import com.bluemoon.bluemoonpay.common.entity.Money;
@@ -11,7 +11,6 @@ import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
