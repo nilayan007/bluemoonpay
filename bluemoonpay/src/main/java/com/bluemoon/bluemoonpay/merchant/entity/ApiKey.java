@@ -16,29 +16,33 @@ import java.util.UUID;
 @Builder
 public class ApiKey {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "merchant_id", nullable = false)
     private Merchant merchant;
 
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     private String keyId;
 
-    @Column(length = 500, nullable = false)
+    @Column(nullable = false, length = 200)
     private String keySecretHash;
 
+    @Column(length = 200)
+    private String previousKeySecretHash;
+
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false, length = 10)
     private Environment environment;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean enabled = true;
 
 
-    private java.time.LocalDateTime createdAt;
+    private java.time.LocalDateTime lastUsedAt;
     private java.time.LocalDateTime rotatedAt;
-    private java.time.LocalDateTime gracePeriodEndAt;
+    private java.time.LocalDateTime gracePeriodExpiresAt;
 
 }
