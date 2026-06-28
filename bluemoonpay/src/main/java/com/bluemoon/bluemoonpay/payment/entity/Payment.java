@@ -25,45 +25,50 @@ public class Payment {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.UUID)
     private UUID id;
 
-    @Embedded
-    private Money amount;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderRecord order;
 
     @Column(nullable = false)
     private UUID merchantId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
-    private OrderRecord orderRecord;
+    @Embedded
+    private Money amount;
 
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false, length = 100)
     private String idempotencyKey;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentStatus paymentStatus;
+    @Column(nullable = false, length = 30)
+    private PaymentStatus status;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentMethods paymentMethods;
+    @Column(nullable = false)
+    private PaymentMethods method;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb", name = "method_details")
+    @Column(name = "method_details", columnDefinition = "jsonb")
     private Map<String, Object> methodDetails;
 
-    @Column(length = 200)
+    @Column(length = 100)
     private String bankReference;
 
-    @Column(length = 200)
+    @Column(length = 100)
+    private String processorReference;
+
+    @Column(length = 100)
     private String errorCode;
 
-    @Column(length = 200)
+    @Column(length = 255)
     private String errorDescription;
 
-
     private LocalDateTime authorizedAt;
+
     private LocalDateTime capturedAt;
+
     private LocalDateTime failedAt;
+
     private LocalDateTime refundedAt;
+
     private LocalDateTime settledAt;
 
 }
