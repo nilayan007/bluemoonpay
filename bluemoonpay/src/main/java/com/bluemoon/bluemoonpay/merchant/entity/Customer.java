@@ -1,13 +1,17 @@
 package com.bluemoon.bluemoonpay.merchant.entity;
 
+import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "customers", indexes = {
+        @Index(name = "idx_customer_merchant_id", columnList = "merchant_id"),
+        @Index(name = "idx_customer_email", columnList = "email")
+})
+public class Customer  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.UUID)

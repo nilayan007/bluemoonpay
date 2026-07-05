@@ -9,6 +9,7 @@ import com.bluemoon.bluemoonpay.payment.dto.response.OrderResponse;
 import com.bluemoon.bluemoonpay.payment.dto.response.PaymentResponse;
 import com.bluemoon.bluemoonpay.payment.entity.OrderRecord;
 import com.bluemoon.bluemoonpay.payment.entity.Payment;
+import com.bluemoon.bluemoonpay.payment.mapper.OrderMapper;
 import com.bluemoon.bluemoonpay.payment.mapper.PaymentMapper;
 import com.bluemoon.bluemoonpay.payment.repository.OrderRepository;
 import com.bluemoon.bluemoonpay.payment.repository.PaymentRepository;
@@ -33,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
+    private  final OrderMapper orderMapper ;
 
     @Value("${payment.order.default-order-expiry-minutes:30}")
     private int defaultOrderExpiryMinutes;
@@ -58,12 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
 // TODO:        publish kafka event about order creation
 
-        return new OrderResponse(order.getId(),
-                order.getMerchantId(),
-                order.getReceipt(), order.getAmount(),
-                order.getOrderStatus(), order.getAttempts(),
-                order.getNotes(), order.getExpiresAt(),
-                null);
+        return orderMapper.toResponse(order);
     }
 
     @Override
@@ -71,8 +68,7 @@ public class OrderServiceImpl implements OrderService {
         OrderRecord order = orderRepository.findByIdAndMerchantId(orderId,merchantId).
                 orElseThrow(()-> new ResourceNotFoundException("Order", orderId));
 
-        return new OrderResponse(order.getId(),order.getMerchantId(),order.getReceipt(),order.getAmount(),
-                order.getOrderStatus(),order.getAttempts(),order.getNotes(),order.getExpiresAt(),null);
+        return orderMapper.toResponse(order);
     }
 
     @Override
@@ -86,8 +82,7 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setOrderStatus(OrderStatus.CANCELED);
         orderRepository.save(order);
-        return new OrderResponse(order.getId(),order.getMerchantId(),order.getReceipt(),order.getAmount(),
-                order.getOrderStatus(),order.getAttempts(),order.getNotes(),order.getExpiresAt(),null);
+        return orderMapper.toResponse(order);
     }
 
     @Override

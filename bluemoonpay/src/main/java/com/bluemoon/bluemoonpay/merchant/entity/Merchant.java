@@ -1,5 +1,6 @@
 package com.bluemoon.bluemoonpay.merchant.entity;
 
+import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
 import com.bluemoon.bluemoonpay.common.enums.BusinessType;
 import com.bluemoon.bluemoonpay.common.enums.MerchantStatus;
 import jakarta.persistence.*;
@@ -8,13 +9,16 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "merchants")
+@Table(name = "merchants",
+        indexes = {
+                @Index(name = "idx_merchant_status", columnList = "status")
+        })
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Merchant {
+public class Merchant  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

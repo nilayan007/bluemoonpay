@@ -1,5 +1,6 @@
 package com.bluemoon.bluemoonpay.payment.entity;
 
+import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
 import com.bluemoon.bluemoonpay.common.entity.Money;
 import com.bluemoon.bluemoonpay.common.enums.RefundStatus;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "refund")
-public class Refund {
+public class Refund  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

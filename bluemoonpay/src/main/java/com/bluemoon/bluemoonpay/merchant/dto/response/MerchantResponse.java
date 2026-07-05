@@ -12,6 +12,6 @@ public record MerchantResponse(
         String email,
         String businessName,
         BusinessType businessType,
-        MerchantStatus merchantStatus
+        MerchantStatus status
 ) {
 }

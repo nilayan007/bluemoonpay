@@ -1,5 +1,6 @@
 package com.bluemoon.bluemoonpay.operations.entity;
 
+import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
 import com.bluemoon.bluemoonpay.common.entity.Money;
 import com.bluemoon.bluemoonpay.common.enums.SettlementStatus;
 import jakarta.persistence.*;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "settlement")
-public class Settlement {
+public class Settlement  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

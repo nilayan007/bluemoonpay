@@ -7,6 +7,7 @@ import com.bluemoon.bluemoonpay.merchant.dto.request.MerchantSignupRequest;
 import com.bluemoon.bluemoonpay.merchant.dto.response.MerchantResponse;
 import com.bluemoon.bluemoonpay.merchant.entity.AppUser;
 import com.bluemoon.bluemoonpay.merchant.entity.Merchant;
+import com.bluemoon.bluemoonpay.merchant.mapper.MerchantMapper;
 import com.bluemoon.bluemoonpay.merchant.repository.AppUserRepository;
 import com.bluemoon.bluemoonpay.merchant.repository.MerchantRepository;
 import com.bluemoon.bluemoonpay.merchant.service.AuthService;
@@ -22,6 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final AppUserRepository appUserRepository;
     private final MerchantRepository merchantRepository;
+    private final MerchantMapper merchantMapper;
 
     @Override
     @Transactional
@@ -31,13 +33,9 @@ public class AuthServiceImpl implements AuthService {
                     "Merchant with email already exists: " + request.email());
         }
 
-        Merchant merchant = Merchant.builder()
-                .businessName(request.businessName())
-                .businessType(request.businessType())
-                .name(request.name())
-                .email(request.email())
-                .status(MerchantStatus.PENDING_KYC)
-                .build();
+        Merchant merchant = merchantMapper.toEntityFromSignUp(request);
+        merchant.setStatus(MerchantStatus.PENDING_KYC);
+
         merchant = merchantRepository.save(merchant);
 
         AppUser appUser = AppUser.builder()
@@ -48,8 +46,6 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         appUserRepository.save(appUser);
 
-        return new MerchantResponse(merchant.getId(), merchant.getName(),
-                merchant.getEmail(), merchant.getBusinessName(),
-                merchant.getBusinessType(), merchant.getStatus());
+        return merchantMapper.toResponse(merchant);
     }
 }

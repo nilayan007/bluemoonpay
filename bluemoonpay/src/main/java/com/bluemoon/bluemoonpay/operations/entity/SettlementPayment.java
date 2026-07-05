@@ -1,10 +1,11 @@
 package com.bluemoon.bluemoonpay.operations.entity;
 
+import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "settlement_payment")
-public class SettlementPayment {
+public class SettlementPayment  {
 
     @EmbeddedId
     private SettlementPaymentId id;
