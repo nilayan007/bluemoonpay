@@ -1,12 +1,19 @@
 package com.bluemoon.bluemoonpay.vault.entity;
 
 import com.bluemoon.bluemoonpay.common.entity.BaseEntity;
+import com.bluemoon.bluemoonpay.common.enums.CardBrand;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "vault_card")
 public class VaultCard  extends BaseEntity {
 
@@ -27,7 +34,7 @@ public class VaultCard  extends BaseEntity {
     private byte[] encryptedDek;
 
     @Column(nullable = false)
-    private String brand; // VISA, RUPAY
+    private CardBrand brand; // VISA, RUPAY
 
     @Column(nullable = false)
     private String expiryMonth;
